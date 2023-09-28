@@ -7,3 +7,8 @@ type UserDetails struct {
 	Email       string `json:"email" validate:"required,email"`
 	PhoneNumber int64  `json:"phoneNumber" validate:"required,min=10,max=10"`
 }
+
+type Data struct {
+	Method int `json:"method"`
+	Time   int `json:"time"`
+}
