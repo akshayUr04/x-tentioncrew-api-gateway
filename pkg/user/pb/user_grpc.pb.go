@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserSvcClient interface {
-	CreatUser(ctx context.Context, in *CreatUserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
+	CreateUser(ctx context.Context, in *CreatUserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 	GetUserById(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponce, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*CommonResponse, error)
@@ -36,9 +36,9 @@ func NewUserSvcClient(cc grpc.ClientConnInterface) UserSvcClient {
 	return &userSvcClient{cc}
 }
 
-func (c *userSvcClient) CreatUser(ctx context.Context, in *CreatUserRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
+func (c *userSvcClient) CreateUser(ctx context.Context, in *CreatUserRequest, opts ...grpc.CallOption) (*CommonResponse, error) {
 	out := new(CommonResponse)
-	err := c.cc.Invoke(ctx, "/product.UserSvc/CreatUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/product.UserSvc/CreateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (c *userSvcClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, o
 // All implementations must embed UnimplementedUserSvcServer
 // for forward compatibility
 type UserSvcServer interface {
-	CreatUser(context.Context, *CreatUserRequest) (*CommonResponse, error)
+	CreateUser(context.Context, *CreatUserRequest) (*CommonResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*CommonResponse, error)
 	GetUserById(context.Context, *GetUserRequest) (*GetUserResponce, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*CommonResponse, error)
@@ -87,8 +87,8 @@ type UserSvcServer interface {
 type UnimplementedUserSvcServer struct {
 }
 
-func (UnimplementedUserSvcServer) CreatUser(context.Context, *CreatUserRequest) (*CommonResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatUser not implemented")
+func (UnimplementedUserSvcServer) CreateUser(context.Context, *CreatUserRequest) (*CommonResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
 }
 func (UnimplementedUserSvcServer) UpdateUser(context.Context, *UpdateUserRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
@@ -112,20 +112,20 @@ func RegisterUserSvcServer(s grpc.ServiceRegistrar, srv UserSvcServer) {
 	s.RegisterService(&UserSvc_ServiceDesc, srv)
 }
 
-func _UserSvc_CreatUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserSvc_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreatUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserSvcServer).CreatUser(ctx, in)
+		return srv.(UserSvcServer).CreateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.UserSvc/CreatUser",
+		FullMethod: "/product.UserSvc/CreateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserSvcServer).CreatUser(ctx, req.(*CreatUserRequest))
+		return srv.(UserSvcServer).CreateUser(ctx, req.(*CreatUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,8 +192,8 @@ var UserSvc_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserSvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreatUser",
-			Handler:    _UserSvc_CreatUser_Handler,
+			MethodName: "CreateUser",
+			Handler:    _UserSvc_CreateUser_Handler,
 		},
 		{
 			MethodName: "UpdateUser",

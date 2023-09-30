@@ -20,7 +20,7 @@ func CreateUser(ctx *gin.Context, p pb.UserSvcClient) {
 		})
 		return
 	}
-	res, err := p.CreatUser(context.Background(), &pb.CreatUserRequest{
+	res, err := p.CreateUser(context.Background(), &pb.CreatUserRequest{
 		Name:        userDetails.Name,
 		HouseName:   userDetails.HouseName,
 		City:        userDetails.City,

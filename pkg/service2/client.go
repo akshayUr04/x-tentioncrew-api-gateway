@@ -10,13 +10,14 @@ import (
 )
 
 type Svc2Client struct {
-	Client pb.ServiceClient
+	Client pb.Service2Client
 }
 
-func InitSvc2(c *config.Config) pb.ServiceClient {
+func InitSvc2(c *config.Config) pb.Service2Client {
+	fmt.Println("in init-----")
 	cc, err := grpc.Dial(c.SERVICE2URL, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		fmt.Println("Could not connect:", err)
 	}
-	return pb.NewServiceClient(cc)
+	return pb.NewService2Client(cc)
 }

@@ -4,8 +4,8 @@ package pb;
 
 option go_package = "./pkg/service2/pb";
 
-service Service{
-    rpc Methods (MethodRequest)returns (MethodResponce){}
+service Service2{
+    rpc Methods(MethodRequest)returns (MethodResponce){}
 }
 
 message MethodRequest{

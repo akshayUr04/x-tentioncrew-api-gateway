@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ServiceClient is the client API for Service service.
+// Service2Client is the client API for Service2 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ServiceClient interface {
+type Service2Client interface {
 	Methods(ctx context.Context, in *MethodRequest, opts ...grpc.CallOption) (*MethodResponce, error)
 }
 
-type serviceClient struct {
+type service2Client struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
+func NewService2Client(cc grpc.ClientConnInterface) Service2Client {
+	return &service2Client{cc}
 }
 
-func (c *serviceClient) Methods(ctx context.Context, in *MethodRequest, opts ...grpc.CallOption) (*MethodResponce, error) {
+func (c *service2Client) Methods(ctx context.Context, in *MethodRequest, opts ...grpc.CallOption) (*MethodResponce, error) {
 	out := new(MethodResponce)
-	err := c.cc.Invoke(ctx, "/pb.Service/Methods", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.Service2/Methods", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
+// Service2Server is the server API for Service2 service.
+// All implementations must embed UnimplementedService2Server
 // for forward compatibility
-type ServiceServer interface {
+type Service2Server interface {
 	Methods(context.Context, *MethodRequest) (*MethodResponce, error)
-	mustEmbedUnimplementedServiceServer()
+	mustEmbedUnimplementedService2Server()
 }
 
-// UnimplementedServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedServiceServer struct {
+// UnimplementedService2Server must be embedded to have forward compatible implementations.
+type UnimplementedService2Server struct {
 }
 
-func (UnimplementedServiceServer) Methods(context.Context, *MethodRequest) (*MethodResponce, error) {
+func (UnimplementedService2Server) Methods(context.Context, *MethodRequest) (*MethodResponce, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Methods not implemented")
 }
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
+func (UnimplementedService2Server) mustEmbedUnimplementedService2Server() {}
 
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
+// UnsafeService2Server may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to Service2Server will
 // result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
+type UnsafeService2Server interface {
+	mustEmbedUnimplementedService2Server()
 }
 
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	s.RegisterService(&Service_ServiceDesc, srv)
+func RegisterService2Server(s grpc.ServiceRegistrar, srv Service2Server) {
+	s.RegisterService(&Service2_ServiceDesc, srv)
 }
 
-func _Service_Methods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service2_Methods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MethodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).Methods(ctx, in)
+		return srv.(Service2Server).Methods(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Service/Methods",
+		FullMethod: "/pb.Service2/Methods",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).Methods(ctx, req.(*MethodRequest))
+		return srv.(Service2Server).Methods(ctx, req.(*MethodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
+// Service2_ServiceDesc is the grpc.ServiceDesc for Service2 service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.Service",
-	HandlerType: (*ServiceServer)(nil),
+var Service2_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.Service2",
+	HandlerType: (*Service2Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Methods",
-			Handler:    _Service_Methods_Handler,
+			Handler:    _Service2_Methods_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

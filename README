@@ -18,9 +18,9 @@ go mod tidy
 .env
 PORT="port that you wan't to run API Gateway"
 
-USER_SERVICE_URL="Port that the User Service running"
+USER_SERVICE_URL="PortURL that the User Service running"
 
-
+SERVICE2_URL="PortURl that the Service2 running"
 #### Run The Application
 
 go run ./cmd/main.go

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"x-tentioncrew/api-gateway/pkg/models"
 	"x-tentioncrew/api-gateway/pkg/service2/pb"
@@ -9,7 +10,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Methods(ctx *gin.Context, c pb.ServiceClient) {
+func Methods(ctx *gin.Context, c pb.Service2Client) {
+	fmt.Println("in method-----")
 	var data models.Data
 	err := ctx.BindJSON(&data)
 	if err != nil {
@@ -19,12 +21,17 @@ func Methods(ctx *gin.Context, c pb.ServiceClient) {
 		})
 		return
 	}
-	res, err := c.Methods(context.Background(), &pb.MethodRequest{
+	fmt.Println("--------------")
+	res, rpcErrr := c.Methods(context.Background(), &pb.MethodRequest{
 		Method:   int64(data.Method),
 		WaitTime: int64(data.Time),
 	})
-	if err != nil {
-		ctx.AbortWithError(http.StatusBadGateway, err)
+
+	if rpcErrr != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   rpcErrr.Error(),
+			"message": "can't getmethod data",
+		})
 		return
 	}
 
