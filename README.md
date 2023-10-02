@@ -25,3 +25,25 @@ SERVICE2_URL="PortURl that the Service2 running"
 
 go run ./cmd/main.go
 
+
+## Follow these steps to Run and Test API using docker
+
+create .env file on the project root dir and add the below envs on it
+```.env
+#example
+PORT="8080"
+M2PORT="50051"
+USERPORT="50052"
+
+USER_SERVICE_URL="userService:50052"
+SERVICE2_URL="service2:50052"
+
+DBHOST="db"
+DBNAME="x-tentioncrew_users"
+DBUSER="postgres"
+DBPORT="5432"
+DBPASSWORD="mypassword"
+
+REDISPORT="6379"
+REDISHOST="redis
+```

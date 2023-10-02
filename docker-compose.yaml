@@ -1,0 +1,54 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5434:5432
+    environment:
+      - DBUSER = postgres
+      - DBPASSWORD = mypassword
+      - DBNAME = x-tentioncrew_users
+  redis: 
+    image: redis
+    ports:
+      - 6375:6379
+  userService:
+    image: akshayur/x-tentioncrew-user:new
+    ports:
+      - 50052:50052
+    environment:
+      - USERPORT = 0.0.0.0:50052
+      - DBHOST = db
+      - DBNAME = x-tentioncrew_users
+      - DBUSER = postgres
+      - DBPASSWORD = myPassword
+      - REDISHOST = redis
+    depends_on:
+      - db
+  service2:
+    image: akshayur/x-tentioncrew-service2:v1
+    ports:
+      - 50053:50053
+    environment:
+      - M2PORT = 0.0.0.0:50053
+      - USER_SERVICE_URL = userService:50052
+    depends_on:
+      - userService
+  apigateway:
+    image: akshayur/x-tentioncrew-apigteway:updated 
+    ports:
+      - 8080:8080
+    environment:
+      - PORT = 8080
+      - USER_SERVICE_URL = userService:50052
+      - SERVICE2_URL = service2:50053
+    depends_on:
+      - userService
+      - service2
+
+
+
+
+
+
+
